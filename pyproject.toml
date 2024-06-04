@@ -32,3 +32,10 @@ rsc_bulk_enrollment = "rscbulkenrollment.rsc_bulk_enroll:main"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]  
+pytest = "^8.0.2"
+pylint = "^3.1.0"
+
+[tool.pylint]
+init-hook='import site; sys.path += site.getsitepackages()'
