@@ -1,6 +1,8 @@
 import csv
 from io import BytesIO, StringIO, TextIOWrapper
 import os
+
+import pytest
 from discovery import importer
 from rscbulkenrollment.rsc import rsc as rscpkg
 
@@ -50,10 +52,16 @@ def test_guess_dialect():
     assert issubclass(dialect, csv.Dialect)
     assert dialect.delimiter == '\t'
 
-def test_file_types():
+@pytest.fixture(scope="session")
+def get_rscs():
+    return [
+        rscpkg.RSC('192.168.0.67','123456789abcdef0!', ""),
+        rscpkg.RSC('192.168.0.17','123456789abcdef0+', "")
+    ]
 
-    rsc1 = rscpkg.RSC('192.168.0.67','123456789abcdef0!', "")
-    rsc2 = rscpkg.RSC('192.168.0.17','123456789abcdef0+', "")
+def test_file_types(get_rscs):
+
+    rsc1, rsc2 = get_rscs
 
     for filename in os.listdir('tests/resources'):
         result = importer.import_rscs(filename=f'tests/resources/{filename}')
@@ -62,4 +70,32 @@ def test_file_types():
         # Verify that the RSCs are the same as the ones in the file
         assert rsc1 in result
         assert rsc2 in result
+
+def test_import_with_list(get_rscs):
+
+    rsc1, rsc2 = get_rscs
+    
+    rsc1_ip = rsc1.address
+    rsc1_pass = rsc1.old_password
+
+    rsc2_ip = rsc2.address
+    rsc2_pass = rsc2.old_password
+
+    result = importer.import_rscs(rsc_list=[
+        f"{rsc1_ip},{rsc1_pass}",
+        f"{rsc2_ip},{rsc2_pass}"])
+    
+    assert isinstance(result, list)
+    assert all(isinstance(rsc, rscpkg.RSC) for rsc in result)
+    # Verify that the RSCs are the same as the ones in the list
+    assert rsc1 in result
+    assert rsc2 in result
+
+def test_duplicates_not_added(get_rscs):
+    rscs = get_rscs
+    rscs.append(rscs[0])
+
+    result = importer.import_rscs(rsc_list=[
+        f"{rsc.address},{rsc.old_password}" for rsc in rscs])
+    assert len(result) == 2
 

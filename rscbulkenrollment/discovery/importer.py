@@ -39,13 +39,19 @@ def get_rscs_from_csv(csv_object: Union[TextIOWrapper, list], dialect: csv.Diale
     rsc_list = []
 
     reader = csv.reader(csv_object, dialect=dialect)
+    line_no = 1
     for line in reader:
         if len(line) < 2:
             raise ValueError(
                 f"Error in line '{line}': need to have at least address and current password")
-        rsc_list.append(rscpkg.RSC(
+        new_rsc = rscpkg.RSC(
             line[0],
             line[1],
             line[2] if len(line) > 2 else ""
-        ))
+        )
+        if new_rsc not in rsc_list:
+            rsc_list.append(new_rsc)
+        else:
+            logging.warning("Duplicate RSC found in CSV file line %d: %s", line_no, new_rsc)
+        line_no += 1
     return rsc_list
