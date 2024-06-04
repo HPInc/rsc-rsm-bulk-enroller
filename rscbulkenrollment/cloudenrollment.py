@@ -6,7 +6,7 @@ import time
 from typing import List
 from rscbulkenrollment.rsc import rsc as rscpkg
 
-VERIFICATION_URI = "https://rsm.anyware.hp.com/console/binding/device/activate?user_codes="
+VERIFICATION_URI = "https://rsm.hp.com/console/binding/device/activate?user_codes="
 
 def bind_rscs_to_cloud(rscs: List[rscpkg.RSC],
                           proxy: str,
