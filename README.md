@@ -2,8 +2,8 @@
 HP Remote System Controller bulk enrollment tool
 ------------------------------------------------
 
-This script is used to enroll multiple HP Remote System Controllers into the HP Remote System Management cloud fleet manager in one go. 
-It uses the Redfish API to do so.
+This script is used to enroll multiple HP Remote System Controllers (RSC) into the HP Remote System Management (RSM) cloud fleet manager in one go. 
+It uses the Redfish API exposed by the RSC to to do so.
 
 How to install
 --------------
