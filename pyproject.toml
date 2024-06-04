@@ -21,9 +21,10 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-requests = ">=2.22.0"
+requests = ">=2.32.0"
 urllib3 = ">=1.25.8"
 zeroconf = ">=0.56.0"
+idna = ">=3.7"
 
 [tool.poetry.scripts]
 rsc_bulk_enrollment = "rscbulkenrollment.rsc_bulk_enroll:main"
