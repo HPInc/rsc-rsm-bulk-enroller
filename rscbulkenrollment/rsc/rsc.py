@@ -54,6 +54,11 @@ class RSC:
             old pass: {self.old_password}\n\
             new password: {self.new_password}\n\
             current password: {self.current_password}"
+    
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, RSC):
+            return False
+        return self.address == other.address and self.old_password == other.old_password
 
     def login(self) -> None:
         '''logs in to the RSC and sets its session token if successful'''
