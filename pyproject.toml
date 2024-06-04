@@ -1,0 +1,33 @@
+# Copyright 2024 HP Development Company, L.P.
+# SPDX-License-Identifier: MIT
+
+[tool.poetry]
+name = "rscbulkenrollment"
+version = "1.0.0"
+description = "HP Remote System Controller Bulk Enrollment Tool"
+authors = ["Diego Medaglia <diego.medaglia@hp.com>"]
+readme = "README.md"
+license = "MIT"
+keywords = [ "HP", "HP Remote System Controller", "Redfish", "HP Remote System Management", "RSC", "RSM", "Enrollment" ]
+classifiers = [
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: System :: Systems Administration",
+    "Topic :: System :: Networking",
+    "Intended Audience :: Information Technology",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = ">=2.22.0"
+urllib3 = ">=1.25.8"
+zeroconf = ">=0.56.0"
+
+[tool.poetry.scripts]
+rsc_bulk_enrollment = "rscbulkenrollment.rsc_bulk_enroll:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
