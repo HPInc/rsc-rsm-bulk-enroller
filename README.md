@@ -2,13 +2,31 @@
 HP Remote System Controller bulk enrollment tool
 ------------------------------------------------
 
-This script is used to enroll multiple HP Remote System Controllers
-to the HP Remote System Management cloud fleet manager in one go. 
+This script is used to enroll multiple HP Remote System Controllers into the HP Remote System Management cloud fleet manager in one go. 
 It uses the Redfish API to do so.
 
 How to install
 --------------
-`python3 -m pip install <path to wheel file>`
+
+1. Install Python 3. Windows or Linux versions are available here: https://www.python.org/downloads/.
+2. Download the application wheel file (.whl) from the [releases page](https://github.com/HPInc/rsc-rsm-bulk-enroller/releases).
+2. Open a the command promt application (Windows), or a terminal (Linux).
+
+3. Create a virtual environment for the scripts to run in. This is not required, but recommended.
+
+   `python3 -m venv rscvenv`
+4. Activate the virtual environment. In case you did not create one, skip this step.
+
+   Linux: `source rscvenv/bin/activate`
+   
+   Windows: `rscvenv\Scripts\activate.bat`
+5. Upgrade pip to the latest version.
+
+   `pip install --upgrade pip`
+
+6. Install the application downloaded in step 2.
+
+    `python3 -m pip install <path to wheel file>`
 
 
 Usage
@@ -38,15 +56,13 @@ The script automates the following steps for each RSC:
 2. Adjust NTP settings of the RSC if informed to do so.
 3. Tell the RSC to enroll into the RSM.
 
-Step 3 generates a verification URI that is used to verify the enrollment.
-The script aggregates all verification URIs and prints a single URI to the console,
-which can be used to verify all enrollments at once. The script then monitors the 
-enrollment status of every RSC.
+Step 3 generates a verification URI that is used to verify the enrollment. The script aggregates all verification URIs and prints a single URI to the console,
+which can be used to verify all enrollments at once. The script then monitors the enrollment status of every RSC.
 
 Users can provide a list of RSCs to enroll in two ways:
 1. Specify all RSCs in the command line directly. Example:
 
-    `rsc_bulk_enrollment -i 192.168.0.88,CurrentPassword1 rschostname,CurrentPassword2,Newpassword2`
+    `rsc_bulk_enrollment -i 192.168.0.88,CurrentPassword1 rsc2hostname,CurrentPassword2,Newpassword2`
 2. Specify a CSV file with RSCs. Example:
 
     `rsc_bulk_enrollment -c RSC.csv`
@@ -66,12 +82,14 @@ The first two lines specify an address, current password and a new password.
 If a password change is required, that is, the RSC's password is still the 
 default administrator password set at the factory, the script will change the
 current password to the new password.
+
 The third line only specifies the current password. If a password change is 
-required the script will fail.
+required the script will fail and produce an error message.
+
 The fourth line specifies the RSC hostname instead of the IP address, which 
 by default is "rsc-" with the serial number of the RSC, which can be scanned on 
 the RSC QR code label. 
-For example, the hostname for serial number 8DD123FFF would be, rsc-8DD123FFF.
+For example, the default hostname for serial number 8DD123FFF would be, rsc-8DD123FFF.
 
 Examples
 --------
