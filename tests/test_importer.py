@@ -1,9 +1,12 @@
+# Copyright 2024 HP Development Company, L.P.
+# SPDX-License-Identifier: MIT
+
 import csv
 from io import BytesIO, StringIO, TextIOWrapper
 import os
 
 import pytest
-from discovery import importer
+from rscbulkenrollment.discovery import importer
 from rscbulkenrollment.rsc import rsc as rscpkg
 
 def test_guess_dialect():
